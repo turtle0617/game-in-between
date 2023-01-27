@@ -1,7 +1,7 @@
 import { POKE_SUIT } from "./type";
-import type { PokeCard } from "./type";
+import type { PokeCardProps } from "./type";
 
-type Card = Omit<PokeCard, "key">;
+type Card = Omit<PokeCardProps, "key">;
 
 export const generatePokeDeck: () => Card[] = () => {
   const amount = 52;
@@ -28,7 +28,7 @@ export const shuffleList = <T = unknown>(list: T[]) => {
   return localList;
 };
 
-export const getShuffledDeck: (deck?: number) => PokeCard[] = (deck = 1) => {
+export const getShuffledDeck: (deck?: number) => PokeCardProps[] = (deck = 1) => {
   return [...Array(deck)]
     .map((_, index) =>
       shuffleList(generatePokeDeck()).map((card) => ({
