@@ -30,6 +30,7 @@ const useInBetween = () => {
   return { pokeDeck, currentPool, changePool };
 };
 
+const showGoalCard = ref(false);
 const { pokeDeck, currentPool, changePool } = useInBetween();
 </script>
 
@@ -53,7 +54,20 @@ const { pokeDeck, currentPool, changePool } = useInBetween();
         </v-col>
 
         <v-col v-if="currentPool.goal">
-          <PokeCard :key="currentPool.goal.key" :card="currentPool.goal" />
+          <v-card>
+            <v-card-actions v-if="!showGoalCard">
+              <v-btn block variant="flat" @click="showGoalCard = true">
+                open
+              </v-btn>
+            </v-card-actions>
+            <v-expand-transition>
+              <PokeCard
+                v-if="showGoalCard"
+                :key="currentPool.front_gate.key"
+                :card="currentPool.front_gate"
+              />
+            </v-expand-transition>
+          </v-card>
         </v-col>
 
         <v-col v-if="currentPool.back_gate" :key="currentPool.back_gate?.key">
