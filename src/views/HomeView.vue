@@ -32,6 +32,11 @@ const useInBetween = () => {
 
 const showGoalCard = ref(false);
 const { pokeDeck, currentPool, changePool } = useInBetween();
+
+const onNext = () => {
+  showGoalCard.value = false;
+  changePool();
+}
 </script>
 
 <template>
@@ -42,7 +47,7 @@ const { pokeDeck, currentPool, changePool } = useInBetween();
           <span>剩下 {{ pokeDeck.length }} 張</span>
         </v-col>
         <v-col>
-          <v-btn color="secondary" @click="changePool"> Next </v-btn>
+          <v-btn color="secondary" @click="onNext"> Next </v-btn>
         </v-col>
       </v-row>
       <v-row>
