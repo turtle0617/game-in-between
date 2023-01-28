@@ -6,4 +6,9 @@ import { RouterView } from "vue-router";
   <RouterView />
 </template>
 
-<style scoped></style>
+<style>
+/* Fix vuetify variable lose issue */
+.v-theme--light {
+  --v-theme-overlay-multiplier: 1;
+}
+</style>
