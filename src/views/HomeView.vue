@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { getShuffledDeck } from "../utils";
 
-const useInBetween = () => {
-  const pokeDeck = ref(getShuffledDeck());
+const useInBetween = (deck = ref(1)) => {
+  const pokeDeck = ref(getShuffledDeck(deck.value));
   const currentPool = computed(() => {
     if (pokeDeck.value.length < 2) {
       return {
@@ -20,23 +20,34 @@ const useInBetween = () => {
     };
   });
 
+  watchEffect(() => {
+    pokeDeck.value = getShuffledDeck(deck.value);
+  });
+
   const changePool = () => {
-    if (pokeDeck.value.length < 2) {
-      pokeDeck.value = getShuffledDeck();
+    if (pokeDeck.value.length - 3 < 2) {
+      pokeDeck.value = getShuffledDeck(deck.value);
+      return;
     }
     pokeDeck.value = pokeDeck.value.slice(3);
   };
 
-  return { pokeDeck, currentPool, changePool };
+  const reset = () => {
+    pokeDeck.value = getShuffledDeck(deck.value);
+  };
+
+  return { pokeDeck, currentPool, changePool, reset };
 };
 
 const showGoalCard = ref(false);
-const { pokeDeck, currentPool, changePool } = useInBetween();
+const deck = ref(1);
+
+const { pokeDeck, currentPool, changePool, reset } = useInBetween(deck);
 
 const onNext = () => {
   showGoalCard.value = false;
   changePool();
-}
+};
 </script>
 
 <template>
@@ -44,10 +55,16 @@ const onNext = () => {
     <v-container class="bg-surface-variant">
       <v-row no-gutters>
         <v-col>
-          <span>剩下 {{ pokeDeck.length }} 張</span>
+          <span>剩下 {{ pokeDeck.length - 3 }} 張</span>
         </v-col>
         <v-col>
           <v-btn color="secondary" @click="onNext"> Next </v-btn>
+        </v-col>
+        <v-col>
+          <v-btn variant="flat" @click="reset"> Reset </v-btn>
+        </v-col>
+        <v-col>
+          <v-select label="用幾副牌組" v-model="deck" :items="[1, 2, 3, 4]" />
         </v-col>
       </v-row>
       <v-row>
