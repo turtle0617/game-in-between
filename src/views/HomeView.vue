@@ -71,14 +71,20 @@ const onReset = () => {
 <template>
   <main>
     <v-container>
-      <v-row no-gutters>
+      <v-row align="center">
         <v-col>
           <span>剩下 {{ pokeDeck.length - 3 }} 張</span>
+        </v-col>
+        <v-col>
+          <v-checkbox
+            hide-details
+            label="永遠顯示"
+            v-model="settings.alwaysShow"
+          />
         </v-col>
       </v-row>
       <v-row>
         <v-col>
-          <v-checkbox label="永遠顯示" v-model="settings.alwaysShow" />
           <v-select
             label="用幾副牌組"
             v-model="settings.deck"
