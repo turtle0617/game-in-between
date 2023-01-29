@@ -9,4 +9,5 @@ export interface PokeCardProps {
   key: string;
   group: POKE_SUIT;
   number: number;
+  symbol: string;
 }

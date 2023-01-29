@@ -17,7 +17,7 @@ export default defineComponent({
       <v-icon :icon="`mdi-cards-${card.group}`" size="x-large"
     /></template>
     <v-card-text>
-      {{ card.number }}
+      {{ card.symbol }}
     </v-card-text>
   </v-card>
 </template>

@@ -10,9 +10,31 @@ export const generatePokeDeck: () => Card[] = () => {
   return [...Array(amount)].map((_, index) => {
     const belongGroup = group[index % group.length];
 
+    const number = (index % (amount / group.length)) + 1;
+    let symbol = number.toString();
+
+    switch (number) {
+      case 1:
+        symbol = "A";
+        break;
+      case 11:
+        symbol = "J";
+        break;
+      case 12:
+        symbol = "Q";
+        break;
+      case 13:
+        symbol = "K";
+        break;
+
+      default:
+        break;
+    }
+
     return {
       group: belongGroup,
-      number: (index % (amount / group.length)) + 1,
+      number,
+      symbol,
     };
   });
 };
@@ -28,7 +50,9 @@ export const shuffleList = <T = unknown>(list: T[]) => {
   return localList;
 };
 
-export const getShuffledDeck: (deck?: number) => PokeCardProps[] = (deck = 1) => {
+export const getShuffledDeck: (deck?: number) => PokeCardProps[] = (
+  deck = 1
+) => {
   return [...Array(deck)]
     .map((_, index) =>
       shuffleList(generatePokeDeck()).map((card) => ({
