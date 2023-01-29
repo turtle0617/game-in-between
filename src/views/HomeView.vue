@@ -73,12 +73,12 @@ const onReset = () => {
     <v-container>
       <v-row align="center">
         <v-col>
-          <span>剩下 {{ pokeDeck.length - 3 }} 張</span>
+          <span>Last {{ pokeDeck.length - 3 }} card</span>
         </v-col>
-        <v-col>
+        <v-col cols="8">
           <v-checkbox
             hide-details
-            label="永遠顯示"
+            label="always show goal card"
             v-model="settings.alwaysShow"
           />
         </v-col>
@@ -86,7 +86,7 @@ const onReset = () => {
       <v-row>
         <v-col>
           <v-select
-            label="用幾副牌組"
+            label="decks"
             v-model="settings.deck"
             :items="[1, 2, 3, 4]"
           />
@@ -113,7 +113,7 @@ const onReset = () => {
           <v-card height="100%" variant="outlined">
             <v-card-actions v-if="!showGoalCard">
               <v-btn block variant="flat" @click="triggerOpenGoalCard = true">
-                open
+                open goal
               </v-btn>
             </v-card-actions>
             <v-expand-transition>
