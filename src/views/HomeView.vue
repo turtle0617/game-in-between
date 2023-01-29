@@ -39,23 +39,31 @@ const useInBetween = (deck = ref(1)) => {
   return { pokeDeck, currentPool, changePool, reset };
 };
 
-const showGoalCard = ref(false);
-const deck = ref(1);
+const settings = ref({
+  deck: 1,
+  alwaysShow: false,
+});
+
+const triggerOpenGoalCard = ref(false);
+const currentDeck = computed(() => settings.value.deck);
+const showGoalCard = computed(
+  () => settings.value.alwaysShow || triggerOpenGoalCard.value
+);
 
 const {
   pokeDeck,
   currentPool,
   changePool,
   reset: resetDeck,
-} = useInBetween(deck);
+} = useInBetween(currentDeck);
 
 const onNext = () => {
-  showGoalCard.value = false;
+  triggerOpenGoalCard.value = false;
   changePool();
 };
 
 const onReset = () => {
-  showGoalCard.value = false;
+  triggerOpenGoalCard.value = false;
   resetDeck();
 };
 </script>
@@ -67,14 +75,24 @@ const onReset = () => {
         <v-col>
           <span>剩下 {{ pokeDeck.length - 3 }} 張</span>
         </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-checkbox label="永遠顯示" v-model="settings.alwaysShow" />
+          <v-select
+            label="用幾副牌組"
+            v-model="settings.deck"
+            :items="[1, 2, 3, 4]"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="4" />
         <v-col>
           <v-btn color="secondary" @click="onNext"> Next </v-btn>
         </v-col>
         <v-col>
           <v-btn variant="flat" @click="onReset"> Reset </v-btn>
-        </v-col>
-        <v-col>
-          <v-select label="用幾副牌組" v-model="deck" :items="[1, 2, 3, 4]" />
         </v-col>
       </v-row>
       <v-row>
@@ -86,9 +104,9 @@ const onReset = () => {
         </v-col>
 
         <v-col v-if="currentPool.goal">
-          <v-card>
+          <v-card height="100%" variant="outlined">
             <v-card-actions v-if="!showGoalCard">
-              <v-btn block variant="flat" @click="showGoalCard = true">
+              <v-btn block variant="flat" @click="triggerOpenGoalCard = true">
                 open
               </v-btn>
             </v-card-actions>
