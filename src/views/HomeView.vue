@@ -42,11 +42,21 @@ const useInBetween = (deck = ref(1)) => {
 const showGoalCard = ref(false);
 const deck = ref(1);
 
-const { pokeDeck, currentPool, changePool, reset } = useInBetween(deck);
+const {
+  pokeDeck,
+  currentPool,
+  changePool,
+  reset: resetDeck,
+} = useInBetween(deck);
 
 const onNext = () => {
   showGoalCard.value = false;
   changePool();
+};
+
+const onReset = () => {
+  showGoalCard.value = false;
+  resetDeck();
 };
 </script>
 
@@ -61,7 +71,7 @@ const onNext = () => {
           <v-btn color="secondary" @click="onNext"> Next </v-btn>
         </v-col>
         <v-col>
-          <v-btn variant="flat" @click="reset"> Reset </v-btn>
+          <v-btn variant="flat" @click="onReset"> Reset </v-btn>
         </v-col>
         <v-col>
           <v-select label="用幾副牌組" v-model="deck" :items="[1, 2, 3, 4]" />
@@ -85,8 +95,8 @@ const onNext = () => {
             <v-expand-transition>
               <PokeCard
                 v-if="showGoalCard"
-                :key="currentPool.front_gate.key"
-                :card="currentPool.front_gate"
+                :key="currentPool.goal.key"
+                :card="currentPool.goal"
               />
             </v-expand-transition>
           </v-card>
