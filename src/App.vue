@@ -5,10 +5,3 @@ import { RouterView } from "vue-router";
 <template>
   <RouterView />
 </template>
-
-<style>
-/* Fix vuetify variable lose issue */
-.v-theme--light {
-  --v-theme-overlay-multiplier: 1;
-}
-</style>

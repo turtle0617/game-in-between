@@ -70,7 +70,7 @@ const onReset = () => {
 
 <template>
   <main>
-    <v-container class="bg-surface-variant">
+    <v-container>
       <v-row no-gutters>
         <v-col>
           <span>剩下 {{ pokeDeck.length - 3 }} 張</span>
