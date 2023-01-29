@@ -6,11 +6,12 @@ type Card = Omit<PokeCardProps, "key">;
 export const generatePokeDeck: () => Card[] = () => {
   const amount = 52;
   const group = Object.values(POKE_SUIT);
+  const groupLength = amount / group.length;
 
   return [...Array(amount)].map((_, index) => {
-    const belongGroup = group[index % group.length];
+    const belongGroup = group[Math.floor(index / groupLength)];
 
-    const number = (index % (amount / group.length)) + 1;
+    const number = (index % groupLength) + 1;
     let symbol = number.toString();
 
     switch (number) {
@@ -42,9 +43,9 @@ export const generatePokeDeck: () => Card[] = () => {
 export const shuffleList = <T = unknown>(list: T[]) => {
   const localList = [...list];
 
-  localList.forEach((item, i) => {
-    let j = Math.floor(Math.random() * (i + 1));
-    [item, localList[j]] = [localList[j], item];
+  localList.forEach((_, i) => {
+    const j = Math.floor(Math.random() * (i + 1));
+    [localList[i], localList[j]] = [localList[j], localList[i]];
   });
 
   return localList;
