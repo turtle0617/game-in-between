@@ -3,7 +3,8 @@
   "exclude": [],
   "compilerOptions": {
     "composite": true,
-    "lib": [],
-    "types": ["node", "jsdom"]
+    "target": "ESNext",
+    "lib": ["dom"],
+    "types": ["cypress", "node"]
   }
 }

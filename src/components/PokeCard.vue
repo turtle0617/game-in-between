@@ -14,9 +14,11 @@ export default defineComponent({
 <template>
   <v-card variant="outlined">
     <template v-slot:title>
-      <v-icon :icon="`mdi-cards-${card.group}`" size="x-large"
-    /></template>
-    <v-card-text>
+      <span data-cy="logo">
+        <v-icon :icon="`mdi-cards-${card.group}`" size="x-large" />
+      </span>
+    </template>
+    <v-card-text data-cy="symbol">
       {{ card.symbol }}
     </v-card-text>
   </v-card>
